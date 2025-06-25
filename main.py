@@ -1,10 +1,12 @@
 import os
 from flask import Flask, request
 from google.cloud import firestore
+from flask_cors import CORS # Dòng mới
 
 app = Flask(__name__)
+CORS(app) # Dòng mới - cho phép cross-origin requests
 
-# KẾT NỐI VÀO ĐÚNG DATABASE 'searchlog'
+# Kết nối vào đúng DATABASE 'searchlog'
 db = firestore.Client(database='searchlog')
 
 @app.route("/", methods=["POST"])
@@ -15,7 +17,6 @@ def log_search_term():
     if not term:
         return 'Missing term', 400
 
-    # Code này sẽ tạo collection 'search_logs' bên trong database 'searchlog'
     db.collection('search_logs').add({
         'term': term,
         'timestamp': firestore.SERVER_TIMESTAMP
