@@ -4,7 +4,7 @@ from google.cloud import firestore
 
 app = Flask(__name__)
 
-# Sửa đổi quan trọng: Thêm database='searchlog' để kết nối đúng CSDL
+# KẾT NỐI VÀO ĐÚNG DATABASE 'searchlog'
 db = firestore.Client(database='searchlog')
 
 @app.route("/", methods=["POST"])
