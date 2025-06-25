@@ -3,7 +3,9 @@ from flask import Flask, request
 from google.cloud import firestore
 
 app = Flask(__name__)
-db = firestore.Client()
+
+# Sửa đổi quan trọng: Thêm database='searchlog' để kết nối đúng CSDL
+db = firestore.Client(database='searchlog')
 
 @app.route("/", methods=["POST"])
 def log_search_term():
@@ -13,6 +15,7 @@ def log_search_term():
     if not term:
         return 'Missing term', 400
 
+    # Code này sẽ tạo collection 'search_logs' bên trong database 'searchlog'
     db.collection('search_logs').add({
         'term': term,
         'timestamp': firestore.SERVER_TIMESTAMP
